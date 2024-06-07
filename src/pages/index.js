@@ -1,118 +1,141 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
+import { useEffect, useState } from "react";
+import styled from "styled-components";
+import Link from "next/link";
 
-const inter = Inter({ subsets: ["latin"] });
+const Container = styled.div`
+    padding: 20px;
+    font-family: Arial, sans-serif;
+`;
+
+const Header = styled.h1`
+    text-align: center;
+    color: #2c3e50;
+`;
+
+const ProfileContainer = styled.div`
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+`;
+
+const ProfileImage = styled.img`
+    border-radius: 5px;
+    width: 800px;
+    height: auto;
+`;
+
+const ProfileDetails = styled.div`
+    flex: 1;
+    line-height: 40px;
+`;
+
+const NoteContainer = styled.div`
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+`;
+
+const NoteLink = styled.a`
+    color: #007bff;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+`;
+
+const Button = styled.button`
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin: 10px 0;
+`;
 
 export default function Home() {
-  return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/pages/index.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    const [notes, setNotes] = useState([]);
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+    useEffect(() => {
+        fetch("/api/getData")
+            .then((res) => res.json())
+            .then((data) => {
+                setNotes(data.data);
+            });
+    }, []);
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+    return (
+        <Container>
+            <Header
+                style={{
+                    fontSize: "20px",
+                    marginBottom: "15px",
+                    fontWeight: "bold",
+                }}>
+                Welcome to My Project
+            </Header>
+            <ProfileContainer>
+                <ProfileDetails>
+                    <h2>
+                        <strong>Naufal Irsyad Ihsan</strong>
+                    </h2>
+                    <p>
+                        Saya Naufal Irsyad Ihsan telah membuat project aplikasi
+                        presensi. Aplikasi ini memungkinkan pengguna untuk
+                        mencatat kehadiran dengan mudah dan efisien.
+                    </p>
+                    <p>
+                        <strong>Project:</strong> Aplikasi Presensi
+                    </p>
+                    <p>
+                        <strong>Description:</strong> Aplikasi ini dibuat untuk
+                        membantu pengguna mencatat dan memantau kehadiran mereka
+                        dalam berbagai kegiatan. Dengan fitur-fitur yang mudah
+                        digunakan, aplikasi ini diharapkan dapat meningkatkan
+                        efisiensi dan produktivitas pengguna.
+                    </p>
+                </ProfileDetails>
+                <ProfileImage src="/Absensi.png" alt="Profile Picture" />
+            </ProfileContainer>
+            <Link href="/add-comment">
+                <Button>Add Comment</Button>
+            </Link>
+            <Header
+                style={{
+                    fontSize: "20px",
+                    marginBottom: "15px",
+                    fontWeight: "bold",
+                }}>
+                Comments
+            </Header>
+            <div>
+                {notes.length > 0 ? (
+                    notes.map((note, index) => (
+                        <NoteContainer key={index}>
+                            <p>
+                                <strong>Name:</strong> {note.name}
+                                <br />
+                                <strong>Website:</strong>{" "}
+                                <NoteLink href={note.website} target="_blank">
+                                    {note.website}
+                                </NoteLink>
+                                <br />
+                                <strong>Komentar:</strong> {note.komentar}
+                            </p>
+                        </NoteContainer>
+                    ))
+                ) : (
+                    <p>Loading....</p>
+                )}
+            </div>
+        </Container>
+    );
 }
