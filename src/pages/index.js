@@ -1,65 +1,5 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import Link from "next/link";
-
-const Container = styled.div`
-    padding: 20px;
-    font-family: Arial, sans-serif;
-`;
-
-const Header = styled.h1`
-    text-align: center;
-    color: #2c3e50;
-`;
-
-const ProfileContainer = styled.div`
-    margin-bottom: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    display: flex;
-    align-items: center;
-`;
-
-const ProfileImage = styled.img`
-    border-radius: 5px;
-    width: 800px;
-    height: auto;
-`;
-
-const ProfileDetails = styled.div`
-    flex: 1;
-    line-height: 40px;
-`;
-
-const NoteContainer = styled.div`
-    margin: 20px 0;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-`;
-
-const NoteLink = styled.a`
-    color: #007bff;
-    text-decoration: none;
-
-    &:hover {
-        text-decoration: underline;
-    }
-`;
-
-const Button = styled.button`
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-    margin: 10px 0;
-`;
 
 export default function Home() {
     const [notes, setNotes] = useState([]);
@@ -73,17 +13,10 @@ export default function Home() {
     }, []);
 
     return (
-        <Container>
-            <Header
-                style={{
-                    fontSize: "20px",
-                    marginBottom: "15px",
-                    fontWeight: "bold",
-                }}>
-                Welcome to My Project
-            </Header>
-            <ProfileContainer>
-                <ProfileDetails>
+        <div className="container">
+            <h1 className="header">Welcome to My Project</h1>
+            <div className="profileContainer">
+                <div className="profileDetails">
                     <h2>
                         <strong>Naufal Irsyad Ihsan</strong>
                     </h2>
@@ -102,40 +35,101 @@ export default function Home() {
                         digunakan, aplikasi ini diharapkan dapat meningkatkan
                         efisiensi dan produktivitas pengguna.
                     </p>
-                </ProfileDetails>
-                <ProfileImage src="/Absensi.png" alt="Profile Picture" />
-            </ProfileContainer>
+                </div>
+                <img
+                    className="profileImage"
+                    src="/Absensi.png"
+                    alt="Profile Picture"
+                />
+            </div>
             <Link href="/add-comment">
-                <Button>Add Comment</Button>
+                <button className="button">Add Comment</button>
             </Link>
-            <Header
-                style={{
-                    fontSize: "20px",
-                    marginBottom: "15px",
-                    fontWeight: "bold",
-                }}>
-                Comments
-            </Header>
+            <h1 className="header">Comments</h1>
             <div>
                 {notes.length > 0 ? (
                     notes.map((note, index) => (
-                        <NoteContainer key={index}>
+                        <div className="noteContainer" key={index}>
                             <p>
                                 <strong>Name:</strong> {note.name}
                                 <br />
                                 <strong>Website:</strong>{" "}
-                                <NoteLink href={note.website} target="_blank">
+                                <a
+                                    className="noteLink"
+                                    href={note.website}
+                                    target="_blank">
                                     {note.website}
-                                </NoteLink>
+                                </a>
                                 <br />
                                 <strong>Komentar:</strong> {note.komentar}
                             </p>
-                        </NoteContainer>
+                        </div>
                     ))
                 ) : (
                     <p>Loading....</p>
                 )}
             </div>
-        </Container>
+            <style jsx>{`
+                .container {
+                    padding: 20px;
+                    font-family: Arial, sans-serif;
+                    width: 100%;
+                    max-width: 1200px;
+                    margin: 0 auto;
+                }
+                .header {
+                    text-align: center;
+                    color: #2c3e50;
+                    font-size: 24px;
+                    margin-bottom: 15px;
+                    font-weight: bold;
+                }
+                .profileContainer {
+                    margin-bottom: 20px;
+                    padding: 20px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    background-color: #f9f9f9;
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+                }
+                .profileImage {
+                    border-radius: 5px;
+                    width: 100%;
+                    max-width: 800px;
+                    height: auto;
+                }
+                .profileDetails {
+                    flex: 1;
+                    line-height: 1.5;
+                    padding: 10px;
+                }
+                .noteContainer {
+                    margin: 20px 0;
+                    padding: 20px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    background-color: #f9f9f9;
+                }
+                .noteLink {
+                    color: #007bff;
+                    text-decoration: none;
+                }
+                .noteLink:hover {
+                    text-decoration: underline;
+                }
+                .button {
+                    background-color: #007bff;
+                    color: white;
+                    border: none;
+                    padding: 10px;
+                    cursor: pointer;
+                    font-size: 16px;
+                    border-radius: 5px;
+                    margin: 10px 0;
+                }
+            `}</style>
+        </div>
     );
 }

@@ -1,56 +1,5 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import styled from "styled-components";
-
-const Container = styled.div`
-    padding: 20px;
-    font-family: Arial, sans-serif;
-`;
-
-const Header = styled.h1`
-    text-align: center;
-    color: #2c3e50;
-`;
-
-const Button = styled.button`
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-    margin: 10px;
-`;
-
-const Form = styled.form`
-    margin-bottom: 20px;
-    max-width: 600px;
-    margin: auto;
-`;
-
-const FormGroup = styled.div`
-    margin-bottom: 15px;
-`;
-
-const Label = styled.label`
-    display: block;
-    margin-bottom: 5px;
-`;
-
-const Input = styled.input`
-    width: calc(100% - 22px);
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-`;
-
-const Textarea = styled.textarea`
-    width: calc(100% - 22px);
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-`;
 
 export default function AddComment() {
     const router = useRouter();
@@ -78,40 +27,96 @@ export default function AddComment() {
     };
 
     return (
-        <Container>
-            <Header>Tambah Komentar</Header>
-            <Form onSubmit={handleSubmit}>
-                <FormGroup>
-                    <Label htmlFor="name">Name:</Label>
-                    <Input
+        <div className="container">
+            <h1 className="header">Tambah Komentar</h1>
+            <form className="form" onSubmit={handleSubmit}>
+                <div className="formGroup">
+                    <label className="label" htmlFor="name">
+                        Name:
+                    </label>
+                    <input
+                        className="input"
                         type="text"
                         id="name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
                     />
-                </FormGroup>
-                <FormGroup>
-                    <Label htmlFor="website">Website:</Label>
-                    <Input
+                </div>
+                <div className="formGroup">
+                    <label className="label" htmlFor="website">
+                        Website:
+                    </label>
+                    <input
+                        className="input"
                         type="url"
                         id="website"
                         value={website}
                         onChange={(e) => setWebsite(e.target.value)}
                         required
                     />
-                </FormGroup>
-                <FormGroup>
-                    <Label htmlFor="komentar">Komentar:</Label>
-                    <Textarea
+                </div>
+                <div className="formGroup">
+                    <label className="label" htmlFor="komentar">
+                        Komentar:
+                    </label>
+                    <textarea
+                        className="textarea"
                         id="komentar"
                         value={komentar}
                         onChange={(e) => setKomentar(e.target.value)}
                         required
                     />
-                </FormGroup>
-                <Button type="submit">Add Comment</Button>
-            </Form>
-        </Container>
+                </div>
+                <button className="button" type="submit">
+                    Add Comment
+                </button>
+            </form>
+            <style jsx>{`
+                .container {
+                    padding: 20px;
+                    font-family: Arial, sans-serif;
+                    width: 100%;
+                    max-width: 600px;
+                    margin: 0 auto;
+                }
+                .header {
+                    text-align: center;
+                    color: #2c3e50;
+                    font-size: 24px;
+                    margin-bottom: 15px;
+                    font-weight: bold;
+                }
+                .form {
+                    margin-bottom: 20px;
+                    max-width: 600px;
+                    margin: auto;
+                }
+                .formGroup {
+                    margin-bottom: 15px;
+                }
+                .label {
+                    display: block;
+                    margin-bottom: 5px;
+                }
+                .input,
+                .textarea {
+                    width: calc(100% - 22px);
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                }
+                .button {
+                    background-color: #007bff;
+                    color: white;
+                    border: none;
+                    padding: 10px;
+                    cursor: pointer;
+                    font-size: 16px;
+                    border-radius: 5px;
+                    margin: 10px;
+                }
+            `}</style>
+        </div>
     );
 }
